@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<!-- ****************************************************************************************** 
+	* Integration Project Build Script * 
+	* Author: Shivanand Kumbhar
+	* Generate java client 
+	* ****************************************************************************************** -->
+<project name="Integration_CXF"  basedir=".">
+
+
+	<!-- Use the properties from the props file -->
+	<property file="build.properties" />
+
+	<path id="cxf.classpath">
+		<pathelement location="${build.classes.dir}" />
+		<fileset dir="${project.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+
+
+	<target name="cxfWSDLToJava-SampleWeatherService">
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-client" />
+			<arg value="-autoNameResolution"/>
+			<arg value="-exsh"/>
+			<arg value="true" />
+			<arg value="-p" />
+			<arg value="http://ws.cdyne.com/WeatherWS/=com.insurance.integration.domain.gen.weatherService" />   
+			<arg value="-b" />
+			<arg value="bindings.txt"/>
+			<arg value="-fe"/>
+			<arg value="jaxws21" />
+			<arg value="-d" /> 
+			<arg value="src" />
+			<arg value="${project.src.dir}/resources/wsdl/weatherService.wsdl" />
+			<!-- <arg value="http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl" /> -->
+			<classpath>
+			<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+	</target>
+ 
+</project>
